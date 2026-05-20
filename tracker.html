@@ -321,9 +321,10 @@ function saveWeek(){
   weekNum = parseInt(document.getElementById('week-input').value) || 1;
   localStorage.setItem('liftlog_week', weekNum);
   document.getElementById('week-badge').textContent = `Week ${weekNum}`;
-  // Clear current sets so fields reset for the new week
   currentSets = {};
-  if(currentDay) selectDay(currentDay.id);
+  currentDay = null;
+  renderDaySelector();
+  renderExercises();
   closeWeekModal();
 }
 
