@@ -137,7 +137,8 @@
 <header>
   <div>
     <div class="logo">LIFT<span>LOG</span></div>
-    <div class="week-badge" id="week-badge" onclick="openWeekModal()">Week 1</div>
+  </div>
+  <div class="week-badge" id="week-badge" onclick="openWeekModal()">Week 1</div>
 </header>
 
 <nav>
@@ -289,8 +290,6 @@ let weekNum = parseInt(localStorage.getItem('liftlog_week') || '1');
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 
 function init(){
-  const now = new Date();
-  document.getElementById('current-date').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
   document.getElementById('week-badge').textContent = `Week ${weekNum}`;
   renderDaySelector();
   renderExercises();
