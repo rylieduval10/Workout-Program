@@ -137,9 +137,7 @@
 <header>
   <div>
     <div class="logo">LIFT<span>LOG</span></div>
-    <div style="font-size:12px;color:var(--muted2);margin-top:4px;" id="current-date"></div>
-  </div>
-  <div class="week-badge" id="week-badge" onclick="openWeekModal()">Week 1</div>
+    <div class="week-badge" id="week-badge" onclick="openWeekModal()">Week 1</div>
 </header>
 
 <nav>
@@ -324,6 +322,9 @@ function saveWeek(){
   weekNum = parseInt(document.getElementById('week-input').value) || 1;
   localStorage.setItem('liftlog_week', weekNum);
   document.getElementById('week-badge').textContent = `Week ${weekNum}`;
+  // Clear current sets so fields reset for the new week
+  currentSets = {};
+  if(currentDay) selectDay(currentDay.id);
   closeWeekModal();
 }
 
@@ -511,7 +512,14 @@ function saveSession(){
 
   sessions.unshift(session);
   localStorage.setItem('liftlog_sessions', JSON.stringify(sessions));
-  alert(`Session saved! ${exercises.length} exercises logged. 💪`);
+
+  // Show confirmation without clearing fields
+  const btn = document.querySelector('.save-session-btn');
+  const orig = btn.textContent;
+  btn.textContent = 'Saved! ✓';
+  btn.style.background = 'var(--green)';
+  setTimeout(()=>{ btn.textContent = orig; btn.style.background = ''; }, 2000);
+
   renderHistory();
   renderStats();
 }
