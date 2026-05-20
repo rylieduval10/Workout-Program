@@ -1,0 +1,6 @@
+{
+    "name": "workout-program",
+    "scripts": {
+      "start": "npx serve . -p $PORT"
+    }
+  }

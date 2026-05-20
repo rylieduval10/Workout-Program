@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6-Day Recomp Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0d0d0d;--surface:#161616;--card:#1c1c1c;--border:#2a2a2a;--accent:#e8ff4a;--text:#f0f0f0;--muted:#888;--push:#ff6b35;--pull:#4a9eff;--legs:#e8ff4a;--cardio:#a78bfa;--rest:#555; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;}
+  .hero{padding:80px 40px 60px;max-width:1100px;margin:0 auto;}
+  .tag{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 12px;margin-bottom:24px;border-radius:2px;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,10vw,120px);line-height:.9;color:var(--text);}
+  h1 span{color:var(--accent);display:block;}
+  .hero-sub{font-size:16px;color:var(--muted);margin-top:20px;max-width:500px;}
+  .hero-stats{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap;}
+  .stat{display:flex;flex-direction:column;}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--accent);line-height:1;}
+  .stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+  .section{max-width:1100px;margin:0 auto;padding:0 40px 60px;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:.05em;color:var(--muted);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;}
+  .principle{background:var(--card);padding:24px;border-left:3px solid var(--accent);}
+  .principle h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px;}
+  .principle p{font-size:14px;color:var(--muted);}
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;}
+  .day-pill{padding:16px 8px;text-align:center;border-radius:2px;}
+  .day-pill.push{background:rgba(255,107,53,.15);border-top:3px solid var(--push);}
+  .day-pill.pull{background:rgba(74,158,255,.15);border-top:3px solid var(--pull);}
+  .day-pill.legs{background:rgba(232,255,74,.12);border-top:3px solid var(--legs);}
+  .day-pill.rest{background:rgba(85,85,85,.15);border-top:3px solid var(--rest);}
+  .day-name{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:6px;}
+  .day-focus{font-family:'Bebas Neue',sans-serif;font-size:18px;}
+  .day-pill.push .day-focus{color:var(--push);}
+  .day-pill.pull .day-focus{color:var(--pull);}
+  .day-pill.legs .day-focus{color:var(--legs);}
+  .day-pill.rest .day-focus{color:var(--rest);}
+  .workout-day{background:var(--surface);border:1px solid var(--border);margin-bottom:3px;overflow:hidden;}
+  .day-header{display:flex;align-items:center;gap:16px;padding:20px 28px;cursor:pointer;user-select:none;transition:background .15s;}
+  .day-header:hover{background:var(--card);}
+  .day-badge{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:.15em;padding:4px 10px;border-radius:2px;flex-shrink:0;}
+  .push-badge{background:rgba(255,107,53,.2);color:var(--push);border:1px solid var(--push);}
+  .pull-badge{background:rgba(74,158,255,.2);color:var(--pull);border:1px solid var(--pull);}
+  .legs-badge{background:rgba(232,255,74,.15);color:var(--legs);border:1px solid var(--legs);}
+  .rest-badge{background:rgba(85,85,85,.2);color:var(--rest);border:1px solid var(--rest);}
+  .day-header-text{flex:1;}
+  .day-header-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.05em;line-height:1;}
+  .day-header-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+  .day-chevron{color:var(--muted);font-size:20px;transition:transform .2s;}
+  .workout-day.open { box-shadow: 0 0 0 1px var(--border), 0 0 30px rgba(232,255,74,0.06), 0 0 60px rgba(232,255,74,0.03); }
+  .workout-day.open[id="d1"], .workout-day.open[id="d4"] { box-shadow: 0 0 0 1px var(--push), 0 0 30px rgba(255,107,53,0.08), 0 0 80px rgba(255,107,53,0.04); }
+  .workout-day.open[id="d2"], .workout-day.open[id="d5"] { box-shadow: 0 0 0 1px var(--pull), 0 0 30px rgba(74,158,255,0.08), 0 0 80px rgba(74,158,255,0.04); }
+  .workout-day.open[id="d3"], .workout-day.open[id="d6"] { box-shadow: 0 0 0 1px var(--legs), 0 0 30px rgba(232,255,74,0.08), 0 0 80px rgba(232,255,74,0.04); }
+  .workout-day.open[id="d7"] { box-shadow: 0 0 0 1px var(--rest), 0 0 30px rgba(85,85,85,0.12), 0 0 80px rgba(85,85,85,0.06); }
+  .day-body{display:none;padding:0 28px 28px;}
+  .workout-day.open .day-body{display:block;}
+  .ex-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+  .ex-table th{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);font-weight:500;}
+  .ex-table td{padding:12px;font-size:14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;}
+  .ex-table tr:last-child td{border-bottom:none;}
+  .ex-table tr:hover td{background:rgba(255,255,255,.02);}
+  .ex-name{font-weight:500;color:var(--text);}
+  .ex-note{font-size:12px;color:var(--muted);margin-top:2px;font-style:italic;}
+  .sets{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.05em;white-space:nowrap;}
+  .rpe{font-size:12px;color:var(--muted);white-space:nowrap;}
+  .cardio-block{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:2px;padding:16px 20px;margin-top:8px;}
+  .cardio-block h4{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--cardio);margin-bottom:8px;}
+  .cardio-block p{font-size:14px;color:var(--muted);}
+  .cardio-block strong{color:var(--text);font-weight:500;}
+  .slabel{font-size:10px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);padding:16px 0 8px;border-bottom:1px solid var(--border);margin-bottom:4px;}
+  .warmup{font-size:14px;color:var(--muted);margin-bottom:16px;}
+  .ngrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;}
+  .ncard{background:var(--card);padding:24px;}
+  .ncard .nl{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:8px;}
+  .ncard .nv{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--accent);line-height:1;}
+  .ncard .nd{font-size:13px;color:var(--muted);margin-top:6px;}
+  .footer{text-align:center;padding:40px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);}
+  @media(max-width:700px){.hero,.section{padding-left:20px;padding-right:20px;}.week-grid{grid-template-columns:repeat(4,1fr);}h1{font-size:64px;}.day-header{padding:16px 20px;}.day-body{padding:0 20px 20px;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">6-Day Recomp Program - v2</div>
+  <h1>BUILD<span>DIFFERENT.</span></h1>
+  <p class="hero-sub">PPL × 2 - engineered for recomposition. Burn fat, build muscle, stay athletic.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">6</span><span class="stat-label">Days / Week</span></div>
+    <div class="stat"><span class="stat-num">PPL×2</span><span class="stat-label">Split</span></div>
+    <div class="stat"><span class="stat-num">~65–75</span><span class="stat-label">Min / Session</span></div>
+    <div class="stat"><span class="stat-num">+Run</span><span class="stat-label">Daily Cardio</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Weekly Overview</div>
+  <div class="week-grid">
+    <div class="day-pill push"><div class="day-name">Mon</div><div class="day-focus">Push</div></div>
+    <div class="day-pill pull"><div class="day-name">Tue</div><div class="day-focus">Pull</div></div>
+    <div class="day-pill legs"><div class="day-name">Wed</div><div class="day-focus">Legs</div></div>
+    <div class="day-pill push"><div class="day-name">Thu</div><div class="day-focus">Push</div></div>
+    <div class="day-pill pull"><div class="day-name">Fri</div><div class="day-focus">Pull</div></div>
+    <div class="day-pill legs"><div class="day-name">Sat</div><div class="day-focus">Legs</div></div>
+    <div class="day-pill rest"><div class="day-name">Sun</div><div class="day-focus">Athletic</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">The Program</div>
+
+  <!-- MON - PUSH HEAVY -->
+  <div class="workout-day" id="d1">
+    <div class="day-header" onclick="toggle('d1')">
+      <span class="day-badge push-badge">MONDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Push - Heavy</div><div class="day-header-sub">Bench · OHP · Incline · Pushdowns · Run</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="slabel">Warm-Up - 5–8 min</div>
+      <p class="warmup">Band pull-aparts × 15, shoulder circles, light push-ups × 10</p>
+      <div class="slabel">Main Work · Rest 3–4 min between sets</div>
+      <table class="ex-table">
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Intensity</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Barbell Bench Press</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">4–5 × 2–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Overhead Press (BB or DB)</div></td><td><span class="sets">3 × 3–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Incline DB Press</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">3 × 3–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Cable Tricep Pushdown</div></td><td><span class="sets">3 × 4–6</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+        </tbody>
+      </table>
+      <div class="cardio-block"><h4>Cardio - After Lifting</h4><p><strong>Easy Run · 20–25 min</strong> - conversational pace. Zone 2.</p></div>
+    </div>
+  </div>
+
+  <!-- TUE - PULL HEAVY -->
+  <div class="workout-day open" id="d2">
+    <div class="day-header" onclick="toggle('d2')">
+      <span class="day-badge pull-badge">TUESDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Pull - Heavy</div><div class="day-header-sub">BB Row · Lat Pulldown · Hammer Curl · BB Curl · Run</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="slabel">Warm-Up - 5 min</div>
+      <p class="warmup">Cat-cow × 10, band pull-aparts × 15, dead hangs × 20–30 sec</p>
+      <div class="slabel">Main Work · Rest 3–4 min between sets</div>
+      <table class="ex-table">
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Intensity</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Barbell Row (Bent-Over)</div></td><td><span class="sets">4–5 × 2–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Lat Pulldown</div></td><td><span class="sets">3 × 3–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Seated DB Hammer Curl</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">3 × 4–6</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Barbell Curl</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">3 × 4–6</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+        </tbody>
+      </table>
+      <div class="cardio-block"><h4>Cardio - After Lifting</h4><p><strong>Tempo Run · 25 min</strong> - 5 min easy, 15 min comfortably hard (~7/10), 5 min cool down.</p></div>
+    </div>
+  </div>
+
+  <!-- WED - LEGS HEAVY -->
+  <div class="workout-day" id="d3">
+    <div class="day-header" onclick="toggle('d3')">
+      <span class="day-badge legs-badge">WEDNESDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Legs - Heavy</div><div class="day-header-sub">Front Squat · RDL · Leg Press · Run</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="slabel">Warm-Up - 8 min</div>
+      <p class="warmup">Hip circles, glute bridges × 15, goblet squat × 10 light, leg swings</p>
+      <div class="slabel">Main Work · Rest 3–4 min between sets</div>
+      <table class="ex-table">
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Intensity</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Front Squat</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">4–5 × 2–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+          <tr><td><div class="ex-name">Romanian Deadlift (RDL)</div></td><td><span class="sets">3 × 3–6</span></td><td><span class="rpe">Heavy / RPE 8–9</span></td></tr>
+          <tr><td><div class="ex-name">Leg Press - High Foot</div></td><td><span class="sets">3 × 4–5</span></td><td><span class="rpe">Heavy / RPE 9</span></td></tr>
+        </tbody>
+      </table>
+      <div class="cardio-block"><h4>Cardio - After Lifting</h4><p><strong>Easy Run · 20 min</strong> - genuinely easy. Legs are taxed. Zone 2 only.</p></div>
+    </div>
+  </div>
+
+  <!-- THU - PUSH VOLUME -->
+  <div class="workout-day" id="d4">
+    <div class="day-header" onclick="toggle('d4')">
+      <span class="day-badge push-badge">THURSDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Push - Volume</div><div class="day-header-sub">Chest · Shoulders · Triceps · Run</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="slabel">Warm-Up - 5 min</div>
+      <p class="warmup">Band pull-aparts, shoulder rotations, light push-ups × 10</p>
+      <div class="slabel">Main Work · Rest 90 sec–2 min between sets</div>
+      <table class="ex-table">
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Intensity</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Bench Press (BB or DB)</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">2–3 × 6–8</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Cable Chest Fly</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Shoulder Press (BB or DB)</div></td><td><span class="sets">2–3 × 6–8</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Lateral Raises</div></td><td><span class="sets">2–3 × 10–12</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Dips</div></td><td><span class="sets">2–3 × 6–8</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Overhead Tricep Extension</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Burnout - Cable Pushdown</div><div class="ex-note">Drop the weight, go to absolute failure</div></td><td><span class="sets">1 × failure</span></td><td><span class="rpe">All out</span></td></tr>
+        </tbody>
+      </table>
+      <div class="cardio-block"><h4>Cardio - After Lifting</h4><p><strong>Interval Run · 25 min</strong> - 5 min warm up, 8 × (1 min hard / 1 min easy), 5 min cool down.</p></div>
+    </div>
+  </div>
+
+  <!-- FRI - PULL VOLUME -->
+  <div class="workout-day" id="d5">
+    <div class="day-header" onclick="toggle('d5')">
+      <span class="day-badge pull-badge">FRIDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Pull - Volume</div><div class="day-header-sub">Back · Biceps · Rear Delts · Run</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="slabel">Warm-Up - 5 min</div>
+      <p class="warmup">Dead hangs, scapular pull-ups, band pull-aparts × 15</p>
+      <div class="slabel">Main Work · Rest 90 sec–2 min between sets</div>
+      <table class="ex-table">
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Intensity</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Single-Arm Dumbbell Row</div></td><td><span class="sets">2–3 × 6–8/side</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Lat Pulldown (wide grip)</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Cable Row (close grip)</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Rear Delt Fly (DB or cable)</div></td><td><span class="sets">2–3 × 10–12</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Incline Dumbbell Curl</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Cable Curl (both arms)</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Burnout - Face Pulls</div><div class="ex-note">Light weight, rep to absolute failure</div></td><td><span class="sets">1 × failure</span></td><td><span class="rpe">All out</span></td></tr>
+        </tbody>
+      </table>
+      <div class="cardio-block"><h4>Cardio - After Lifting</h4><p><strong>Steady Run · 30 min</strong> - moderate effort, ~6–7/10. Your longest run of the week.</p></div>
+    </div>
+  </div>
+
+  <!-- SAT - LEGS VOLUME -->
+  <div class="workout-day" id="d6">
+    <div class="day-header" onclick="toggle('d6')">
+      <span class="day-badge legs-badge">SATURDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Legs - Volume</div><div class="day-header-sub">Front Squat · Deadlift · BSS · Leg Curl · Lunges · Run</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="slabel">Warm-Up - 8 min</div>
+      <p class="warmup">Hip circles, glute bridges × 20, clamshells × 15/side, goblet squat × 10 light</p>
+      <div class="slabel">Main Work · Everything intentional and slow · Rest 90 sec–2 min</div>
+      <table class="ex-table">
+        <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Intensity</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Front Squat</div><div class="ex-note">3 sec eccentric - lighter than Wed, focus on form and feel</div></td><td><span class="sets">2–3 × 6–8</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Conventional Deadlift</div><div class="ex-note">4 sec eccentric - super slow, every inch intentional</div></td><td><span class="sets">2–3 × 6–8</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Bulgarian Split Squat (DB)</div><div class="ex-note">3 sec eccentric - rear foot on bench, upright torso</div></td><td><span class="sets">2–3 × 8–10/leg</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Leg Curl (seated or lying)</div><div class="ex-note">3 sec eccentric</div></td><td><span class="sets">2–3 × 8–10</span></td><td><span class="rpe">RPE 7–8</span></td></tr>
+          <tr><td><div class="ex-name">Walking Lunges (DB)</div><div class="ex-note">Progressive finisher - add 1 set per week starting at 1 set</div></td><td><span class="sets">Progressive × 15–20/leg</span></td><td><span class="rpe">RPE 7</span></td></tr>
+          <tr><td><div class="ex-name">Burnout - Leg Press</div><div class="ex-note">Drop the weight way down, rep to failure</div></td><td><span class="sets">1 × failure</span></td><td><span class="rpe">All out</span></td></tr>
+        </tbody>
+      </table>
+      <div class="cardio-block"><h4>Cardio - After Lifting</h4><p><strong>Easy Run · 20 min</strong> - end of the week. Zone 2. Cool down, don't crush it.</p></div>
+    </div>
+  </div>
+
+  <!-- SUN - ATHLETIC -->
+  <div class="workout-day" id="d7">
+    <div class="day-header" onclick="toggle('d7')">
+      <span class="day-badge rest-badge">SUNDAY</span>
+      <div class="day-header-text"><div class="day-header-title">Athletic Day</div><div class="day-header-sub">Hang Cleans · Skill Work · Mobility</div></div>
+      <span class="day-chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:20px;">Athletic work and recovery. Skill, not strength.</p>
+      <table class="ex-table">
+        <thead><tr><th>Activity</th><th>Details</th><th>Duration</th></tr></thead>
+        <tbody>
+          <tr><td><div class="ex-name">Hang Cleans</div></td><td><span class="sets">5–8 × 3</span></td><td><span class="rpe">RPE 6–7</span></td></tr>
+          <tr><td><div class="ex-name">Agility / Footwork Drills</div></td><td><span class="sets">Low effort</span></td><td><span class="rpe">15–20 min</span></td></tr>
+          <tr><td><div class="ex-name">Mobility Flow</div></td><td><span class="sets">Relaxed</span></td><td><span class="rpe">20 min</span></td></tr>
+          <tr><td><div class="ex-name">Easy Walk</div></td><td><span class="sets">Easy</span></td><td><span class="rpe">20–30 min</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script>
+function toggle(id){document.getElementById(id).classList.toggle('open');}
+</script>
+</body>
+</html>
